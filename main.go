@@ -25,6 +25,10 @@ var err error
 
 func main() {
 	// load environment variables
+	
+	
+	
+	
 	os.Setenv("HOST", "localhost")
 	os.Setenv("DBPORT", "5433")
 	os.Setenv("USER", "postgres")
@@ -36,7 +40,7 @@ func main() {
 	dbName := os.Getenv("NAME")
 	password := os.Getenv("PASSWORD")
 
-	// database connection
+	// database connection string
 	dbURI := fmt.Sprintf("host=%s user=%s dbname=%s sslmode=disable password=%s port=%s", host, user, dbName, password, dbPort)
 
 	// open connection to db
@@ -68,8 +72,8 @@ func createResponse(w http.ResponseWriter, r *http.Request) {
 	var response Response
 	json.NewDecoder(r.Body).Decode(&response)
 
-	createdPerson := db.Create(&response)
-	err = createdPerson.Error
+	createdResponse := db.Create(&response)
+	err = createdResponse.Error
 	if err != nil {
 		json.NewEncoder(w).Encode(err)
 	} else {
